@@ -17,6 +17,9 @@ chess_pieces = {
 	"P" : "pawn"
 }
 
+# inverse the dict containing the pieces
+chess_pieces_inverse = {v: k for k, v in chess_pieces.items()}
+
 #########################################################
 # reset a board to its initial starting configuration	#
 # small letters = white pieces							#
@@ -27,22 +30,19 @@ def reset_board(reset_board):
 
 	# pawns
 	for i in range(0, 8):
-		reset_board[1, i] = "p"
-		reset_board[6, i] = "P"
-
-	# inverse the dict containing the pieces
-	inverse_chess_pieces = {v: k for k, v in chess_pieces.items()}
+		reset_board[1, i] = chess_pieces_inverse["pawn"].lower()
+		reset_board[6, i] = chess_pieces_inverse["pawn"]
 
 	# rest of the pieces
 	for i in range(0, 8, 7):
-		reset_board[i, 0] = inverse_chess_pieces["rook"]
-		reset_board[i, 1] = inverse_chess_pieces["knight"]
-		reset_board[i, 2] = inverse_chess_pieces["bishop"]
-		reset_board[i, 3] = inverse_chess_pieces["queen"]
-		reset_board[i, 4] = inverse_chess_pieces["king"]
-		reset_board[i, 5] = inverse_chess_pieces["bishop"]
-		reset_board[i, 6] = inverse_chess_pieces["knight"]
-		reset_board[i, 7] = inverse_chess_pieces["rook"]
+		reset_board[i, 0] = chess_pieces_inverse["rook"]
+		reset_board[i, 1] = chess_pieces_inverse["knight"]
+		reset_board[i, 2] = chess_pieces_inverse["bishop"]
+		reset_board[i, 3] = chess_pieces_inverse["queen"]
+		reset_board[i, 4] = chess_pieces_inverse["king"]
+		reset_board[i, 5] = chess_pieces_inverse["bishop"]
+		reset_board[i, 6] = chess_pieces_inverse["knight"]
+		reset_board[i, 7] = chess_pieces_inverse["rook"]
 
 	# convert the entries into lower case letters for the white pieces
 	for i in range(0, 8):
@@ -102,7 +102,7 @@ def valid_move_for_piece(chess_board, piece_position):
 	possible_moves = np.empty([0], dtype = str)
 
 	# white pawn
-	if piece_id == "p":
+	if piece_id == chess_pieces_inverse["pawn"].lower():
 		# unmoved (white) pawn: check for a two-move
 		if piece_row_pos == 1 and chess_board[piece_row_pos+1, piece_col_pos] == "":
 			if (
@@ -141,7 +141,7 @@ def valid_move_for_piece(chess_board, piece_position):
 					)
 
 	# black pawn
-	if piece_id == "P":
+	if piece_id == chess_pieces_inverse["pawn"]:
 		# unmoved (white) pawn: check for a two-move
 		if piece_row_pos == 6 and chess_board[piece_row_pos-1, piece_col_pos] == "":
 			if (
@@ -179,6 +179,66 @@ def valid_move_for_piece(chess_board, piece_position):
 						piece_col_pos+1
 					)
 
+	# rook
+	# TODO: make this routine (for the rook) more efficiently -> benchmark this (timewise)!
+	if piece_id.lower() == chess_pieces_inverse["rook"].lower():
+
+
+		# obstacle_* == True -> piece in direction detected
+		obstacle_north = False
+		obstacle_south = False
+		obstacle_east = False
+		obstacle_west = False
+
+		# search seven in each direction. If a piece is detected in any of
+		# the four cardinal direction, the obstacle_* variable is set True
+		# and any further search in that direction is not continued.
+		for i in range(7):
+			# check all four cardinal directions
+			#
+			# 'north'
+			if piece_row_pos+i+1 < 8 and obstacle_north == False:
+				if chess_board[piece_row_pos+i+1, piece_col_pos] == "":
+					possible_moves = add_to_poss_moves(
+						possible_moves,
+						piece_row_pos+i+1,
+						piece_col_pos
+					)
+				else:
+					obstacle_north = True
+			#
+			# 'south'
+			if piece_row_pos-i-1 > -1 and obstacle_south == False:
+				if chess_board[piece_row_pos-i-1, piece_col_pos] == "":
+					possible_moves = add_to_poss_moves(
+						possible_moves,
+						piece_row_pos-i-1,
+						piece_col_pos
+					)
+				else:
+					obstacle_south = True
+			#
+			# 'east'
+			if piece_col_pos+i+1 < 8 and obstacle_east == False:
+				if chess_board[piece_row_pos, piece_col_pos+i+1] == "":
+					possible_moves = add_to_poss_moves(
+						possible_moves,
+						piece_row_pos,
+						piece_col_pos+i+1
+					)
+				else:
+					obstacle_east = True
+			#
+			# 'west'
+			if piece_col_pos-i-1 > -1 and obstacle_west == False:
+				if chess_board[piece_row_pos, piece_col_pos-i-1] == "":
+					possible_moves = add_to_poss_moves(
+						possible_moves,
+						piece_row_pos,
+						piece_col_pos-i-1
+					)
+				else:
+					obstacle_west = True
 
 	return possible_moves
 
