@@ -59,7 +59,7 @@ def reset_board(reset_board):
 #########################################
 def print_board(print_board, highlight_piece_to_move = '', highlight_fields = ''):
 	print("print board state (small letters = white)")
-	print("hightlight fields: ", highlight_fields)
+	#print("hightlight fields: ", highlight_fields)
 
 	# print header
 	header_entries = ["a", "b", "c", "d", "e", "f", "g", "h"]
@@ -109,7 +109,7 @@ def add_to_poss_moves(possible_moves, piece_row_pos, piece_col_pos):
 #################################################################
 # determine the valid moves for a given piece and board state	#
 #################################################################
-def valid_move_for_piece(chess_board, piece_position):
+def valid_move_for_piece(chess_board, piece_position, player_color):
 	# TODO: add en passant and promotion for pawns
 	print("DET VALID MOVE: ", piece_position)
 
@@ -213,35 +213,63 @@ def valid_move_for_piece(chess_board, piece_position):
 
 		# search seven in each direction. If a piece is detected in any of
 		# the four cardinal direction, the obstacle_* variable is set True
-		# and any further search in that direction is not continued.
+		# and any further search in that direction is not continued. Until
+		# then (empty positions) are added to the array of possible moves.
 		for i in range(7):
 			# check all four cardinal directions
 			#
 			# 'north'
 			if piece_row_pos + i + 1 < 8 and obstacle_north == False:
-				if chess_board[piece_row_pos + i + 1, piece_col_pos] == "":
+				# save the content of the field scrutinised into a variable for brevity
+				piece_to_check_north = chess_board[piece_row_pos + i + 1, piece_col_pos]
+				#
+				if piece_to_check_north == "":
 					possible_moves = add_to_poss_moves(
 						possible_moves,
 						piece_row_pos + i + 1,
 						piece_col_pos
 					)
 				else:
-					obstacle_north = True
+					obstacle_north = True	# don't search any further in this direction
+					# add the last piece detected if it can be captured
+					if ((piece_to_check_north.isupper() and player_color == "white")
+						or (piece_to_check_north.islower() and player_color == "black")
+					):
+						possible_moves = add_to_poss_moves(
+							possible_moves,
+							piece_row_pos + i + 1,
+							piece_col_pos
+						)
 			#
 			# 'south'
 			if piece_row_pos - i - 1 > -1 and obstacle_south == False:
-				if chess_board[piece_row_pos - i - 1, piece_col_pos] == "":
+				# save the content of the field scrutinised into a variable for brevity
+				piece_to_check_south = chess_board[piece_row_pos - i - 1, piece_col_pos]
+				#
+				if piece_to_check_south == "":
 					possible_moves = add_to_poss_moves(
 						possible_moves,
 						piece_row_pos - i - 1,
 						piece_col_pos
 					)
 				else:
-					obstacle_south = True
+					obstacle_south = True	# don't search any further in this direction
+					# add the last piece detected if it can be captured
+					if ((piece_to_check_south.isupper() and player_color == "white")
+						or (piece_to_check_south.islower() and player_color == "black")
+					):
+						possible_moves = add_to_poss_moves(
+							possible_moves,
+							piece_row_pos - i - 1,
+							piece_col_pos
+						)
 			#
 			# 'east'
 			if piece_col_pos + i + 1 < 8 and obstacle_east == False:
-				if chess_board[piece_row_pos, piece_col_pos + i + 1] == "":
+				# save the content of the field scrutinised into a variable for brevity
+				piece_to_check_east = chess_board[piece_row_pos, piece_col_pos + i + 1]
+				#
+				if piece_to_check_east == "":
 					possible_moves = add_to_poss_moves(
 						possible_moves,
 						piece_row_pos,
@@ -249,10 +277,22 @@ def valid_move_for_piece(chess_board, piece_position):
 					)
 				else:
 					obstacle_east = True
+					# add the last piece detected if it can be captured
+					if ((piece_to_check_east.isupper() and player_color == "white")
+						or (piece_to_check_east.islower() and player_color == "black")
+					):
+						possible_moves = add_to_poss_moves(
+							possible_moves,
+							piece_row_pos,
+							piece_col_pos + i + 1
+						)
 			#
 			# 'west'
 			if piece_col_pos - i - 1 > -1 and obstacle_west == False:
-				if chess_board[piece_row_pos, piece_col_pos - i - 1] == "":
+				# save the content of the field scrutinised into a variable for brevity
+				piece_to_check_west = chess_board[piece_row_pos, piece_col_pos - i - 1]
+				#
+				if piece_to_check_west == "":
 					possible_moves = add_to_poss_moves(
 						possible_moves,
 						piece_row_pos,
@@ -260,6 +300,15 @@ def valid_move_for_piece(chess_board, piece_position):
 					)
 				else:
 					obstacle_west = True
+					# add the last piece detected if it can be captured
+					if ((piece_to_check_west.isupper() and player_color == "white")
+						or (piece_to_check_west.islower() and player_color == "black")
+					):
+						possible_moves = add_to_poss_moves(
+							possible_moves,
+							piece_row_pos,
+							piece_col_pos - i - 1
+						)
 
 	# knight
 	if piece_id.lower() == chess_pieces_inverse["knight"].lower():
@@ -314,5 +363,4 @@ def valid_move_for_piece(chess_board, piece_position):
 					)
 
 	return possible_moves
-
 
