@@ -50,7 +50,7 @@ def reset_board(reset_board):
 
 	# convert the entries into lower case letters for the white pieces
 	for i in range(0, 8):
-		reset_board[0, i-1] = reset_board[0, i-1].lower()
+		reset_board[0, i - 1] = reset_board[0, i - 1].lower()
 
 	return reset_board
 
@@ -68,31 +68,29 @@ def print_board(print_board, highlight_piece_to_move = '', highlight_fields = ''
 	print(header_string)
 	print("     ---------------------------------")
 
-	print("PTM: ", highlight_piece_to_move[:-1])
-
 	# print middle part
 	for row in range(0, 8):
 		eval_row = 8 - row
 		print(" ", eval_row, " | ", end = "")
 		for col in range(0, 8):
 			# hightlight possible moves with that piece (given by 'highlight_piece_to_move')
-			search_str_arr = str(7-row) + str(col)
+			search_str_arr = str(7 - row) + str(col)
 			if search_str_arr in highlight_fields:
 				# no enemy piece on the field to move (-> mark this field with '+')
-				if print_board[7-row, col] == "":
+				if print_board[7 - row, col] == "":
 					fetch_piece = Fore.RED + "+" + Style.RESET_ALL
 				# enemy piece on field -> colorise it red
 				else:
-					fetch_piece = Fore.RED + print_board[7-row, col] + Style.RESET_ALL
+					fetch_piece = Fore.RED + print_board[7 - row, col] + Style.RESET_ALL
 
 				print(fetch_piece + " | ", end = "", sep = "")
 			else:
 				# highlight piece which is about to move blue
 				if highlight_piece_to_move[:-1] == search_str_arr:
-					fetch_piece = Fore.BLUE + print_board[7-row, col] + Style.RESET_ALL
+					fetch_piece = Fore.BLUE + print_board[7 - row, col] + Style.RESET_ALL
 				# default coloring
 				else:
-					fetch_piece = " " if print_board[7-row, col] == "" else print_board[7-row, col]
+					fetch_piece = " " if print_board[7 - row, col] == "" else print_board[7 - row, col]
 
 				print(fetch_piece, " | ", end = "", sep = "")
 
@@ -132,51 +130,51 @@ def valid_move_for_piece(chess_board, piece_position):
 		# unmoved (white) pawn: check for a two-move
 		if piece_row_pos == 1 and chess_board[piece_row_pos+1, piece_col_pos] == "":
 			if (
-				chess_board[piece_row_pos+2, piece_col_pos].isupper()
-				or chess_board[piece_row_pos+2, piece_col_pos] == ""
+				chess_board[piece_row_pos + 2, piece_col_pos].isupper()
+				or chess_board[piece_row_pos + 2, piece_col_pos] == ""
 				):
 				possible_moves = add_to_poss_moves(
 					possible_moves,
-					piece_row_pos+2,
+					piece_row_pos + 2,
 					piece_col_pos
 				)
 
 		# check for all other moves (advance one directly or capture
 		# to the adjacent diagonals in direction of advancing)
 		if piece_row_pos < 7:	# pawn has not reached the end of the board
-			if chess_board[piece_row_pos+1, piece_col_pos] == "":	# empty tile in front
+			if chess_board[piece_row_pos + 1, piece_col_pos] == "":	# empty tile in front
 				possible_moves = add_to_poss_moves(
 					possible_moves,
-					piece_row_pos+1,
+					piece_row_pos + 1,
 					piece_col_pos
 				)
 			# check the diagonals (in front)
-			if piece_col_pos-1 > -1:	# diagonal 'up, left' is not out of bounds
-				if chess_board[piece_row_pos+1, piece_col_pos-1].isupper():
+			if piece_col_pos - 1 > -1:	# diagonal 'up, left' is not out of bounds
+				if chess_board[piece_row_pos + 1, piece_col_pos - 1].isupper():
 					possible_moves = add_to_poss_moves(
 						possible_moves,
-						piece_row_pos+1,
-						piece_col_pos-1
+						piece_row_pos + 1,
+						piece_col_pos - 1
 					)
-			if (piece_col_pos+1 < 7):	# diagonal 'up, right' is not out of bounds
-				if chess_board[piece_row_pos+1, piece_col_pos+1].isupper():
+			if (piece_col_pos + 1 < 7):	# diagonal 'up, right' is not out of bounds
+				if chess_board[piece_row_pos+1, piece_col_pos + 1].isupper():
 					possible_moves = add_to_poss_moves(
 						possible_moves,
-						piece_row_pos+1,
-						piece_col_pos+1
+						piece_row_pos + 1,
+						piece_col_pos + 1
 					)
 
 	# black pawn
 	if piece_id == chess_pieces_inverse["pawn"]:
 		# unmoved (white) pawn: check for a two-move
-		if piece_row_pos == 6 and chess_board[piece_row_pos-1, piece_col_pos] == "":
+		if piece_row_pos == 6 and chess_board[piece_row_pos - 1, piece_col_pos] == "":
 			if (
-				chess_board[piece_row_pos-2, piece_col_pos].isupper()
-				or chess_board[piece_row_pos-2, piece_col_pos] == ""
+				chess_board[piece_row_pos - 2, piece_col_pos].isupper()
+				or chess_board[piece_row_pos - 2, piece_col_pos] == ""
 				):
 				possible_moves = add_to_poss_moves(
 					possible_moves,
-					piece_row_pos-2,
+					piece_row_pos - 2,
 					piece_col_pos
 				)
 
@@ -186,23 +184,23 @@ def valid_move_for_piece(chess_board, piece_position):
 			if chess_board[piece_row_pos-1, piece_col_pos] == "":	# empty tile in front
 				possible_moves = add_to_poss_moves(
 					possible_moves,
-					piece_row_pos-1,
+					piece_row_pos - 1,
 					piece_col_pos
 				)
 			# check the diagonals (in front)
-			if piece_col_pos-1 > -1:	# diagonal 'up, left' is not out of bounds
-				if chess_board[piece_row_pos-1, piece_col_pos-1].islower():
+			if piece_col_pos - 1 > -1:	# diagonal 'up, left' is not out of bounds
+				if chess_board[piece_row_pos - 1, piece_col_pos - 1].islower():
 					possible_moves = add_to_poss_moves(
 						possible_moves,
-						piece_row_pos-1,
-						piece_col_pos-1
+						piece_row_pos - 1,
+						piece_col_pos - 1
 					)
-			if (piece_col_pos+1 < 8):	# diagonal 'up, right' is not out of bounds
-				if chess_board[piece_row_pos-1, piece_col_pos+1].islower():
+			if (piece_col_pos + 1 < 8):	# diagonal 'up, right' is not out of bounds
+				if chess_board[piece_row_pos - 1, piece_col_pos + 1].islower():
 					possible_moves = add_to_poss_moves(
 						possible_moves,
-						piece_row_pos-1,
-						piece_col_pos+1
+						piece_row_pos - 1,
+						piece_col_pos + 1
 					)
 
 	# rook
@@ -213,9 +211,6 @@ def valid_move_for_piece(chess_board, piece_position):
 		obstacle_east = False
 		obstacle_west = False
 
-		# TODO:	check, whether the piece can be captured and
-		#		add or remove it from the array 'possible_moves'
-
 		# search seven in each direction. If a piece is detected in any of
 		# the four cardinal direction, the obstacle_* variable is set True
 		# and any further search in that direction is not continued.
@@ -223,45 +218,45 @@ def valid_move_for_piece(chess_board, piece_position):
 			# check all four cardinal directions
 			#
 			# 'north'
-			if piece_row_pos+i+1 < 8 and obstacle_north == False:
-				if chess_board[piece_row_pos+i+1, piece_col_pos] == "":
+			if piece_row_pos + i + 1 < 8 and obstacle_north == False:
+				if chess_board[piece_row_pos + i + 1, piece_col_pos] == "":
 					possible_moves = add_to_poss_moves(
 						possible_moves,
-						piece_row_pos+i+1,
+						piece_row_pos + i + 1,
 						piece_col_pos
 					)
 				else:
 					obstacle_north = True
 			#
 			# 'south'
-			if piece_row_pos-i-1 > -1 and obstacle_south == False:
-				if chess_board[piece_row_pos-i-1, piece_col_pos] == "":
+			if piece_row_pos - i - 1 > -1 and obstacle_south == False:
+				if chess_board[piece_row_pos - i - 1, piece_col_pos] == "":
 					possible_moves = add_to_poss_moves(
 						possible_moves,
-						piece_row_pos-i-1,
+						piece_row_pos - i - 1,
 						piece_col_pos
 					)
 				else:
 					obstacle_south = True
 			#
 			# 'east'
-			if piece_col_pos+i+1 < 8 and obstacle_east == False:
-				if chess_board[piece_row_pos, piece_col_pos+i+1] == "":
+			if piece_col_pos + i + 1 < 8 and obstacle_east == False:
+				if chess_board[piece_row_pos, piece_col_pos + i + 1] == "":
 					possible_moves = add_to_poss_moves(
 						possible_moves,
 						piece_row_pos,
-						piece_col_pos+i+1
+						piece_col_pos + i + 1
 					)
 				else:
 					obstacle_east = True
 			#
 			# 'west'
-			if piece_col_pos-i-1 > -1 and obstacle_west == False:
-				if chess_board[piece_row_pos, piece_col_pos-i-1] == "":
+			if piece_col_pos - i - 1 > -1 and obstacle_west == False:
+				if chess_board[piece_row_pos, piece_col_pos - i - 1] == "":
 					possible_moves = add_to_poss_moves(
 						possible_moves,
 						piece_row_pos,
-						piece_col_pos-i-1
+						piece_col_pos - i - 1
 					)
 				else:
 					obstacle_west = True

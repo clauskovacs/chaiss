@@ -67,8 +67,11 @@ class RandomAgent:
 		i = 2
 		j = 3
 
-		chess_board[i, j] = "p"
-		pieces_on_board[random_piece_on_board] = str(i) + str(j) + "p"
+		chess_board[4, 3] = "P"
+		chess_board[2, 5] = "N"
+
+		chess_board[i, j] = "r"
+		pieces_on_board[random_piece_on_board] = str(i) + str(j) + chess_board[i, j]
 
 
 		possible_moves = boardcontrol.valid_move_for_piece(
