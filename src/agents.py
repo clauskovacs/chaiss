@@ -64,20 +64,11 @@ class RandomAgent:
 		random_piece_on_board = 1
 
 		# change and return the board state with the taken move
-		'''
-		i = 1
-		j = 1
-		chess_board[0, 0] = "X"
-		chess_board[0, 1] = ""
-		chess_board[j, i] = "P"
-		#chess_board[6, int(i)] = "p"
-		pieces_on_board[random_piece_on_board] = str(j) + str(i) + "P"
-		'''
+		i = 2
+		j = 3
 
-		#chess_board[4, 3] = "x"
-
-		chess_board[3, 3] = "n"
-		pieces_on_board[random_piece_on_board] = "33n"
+		chess_board[i, j] = "p"
+		pieces_on_board[random_piece_on_board] = str(i) + str(j) + "p"
 
 
 		possible_moves = boardcontrol.valid_move_for_piece(
@@ -89,5 +80,5 @@ class RandomAgent:
 
 		#self.generate_random_move(chess_board, pieces_on_board[random_piece_on_board])
 
-		return chess_board
+		return chess_board, pieces_on_board[random_piece_on_board], possible_moves
 

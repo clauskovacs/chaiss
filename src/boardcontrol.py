@@ -7,6 +7,10 @@ This file contains all the logic setting up and managing the board.
 
 import numpy as np
 
+#install colorama using 'sudo python3 -m pip install colorama'
+from colorama import Fore, Style, init
+init()
+
 # dict for the pieces (abbreviated as they are stored in the board state)
 chess_pieces = {
 	"K" : "king",
@@ -53,8 +57,9 @@ def reset_board(reset_board):
 #########################################
 # print a board state (to the console)	#
 #########################################
-def print_board(print_board):
+def print_board(print_board, highlight_piece_to_move = '', highlight_fields = ''):
 	print("print board state (small letters = white)")
+	print("hightlight fields: ", highlight_fields)
 
 	# print header
 	header_entries = ["a", "b", "c", "d", "e", "f", "g", "h"]
@@ -63,13 +68,34 @@ def print_board(print_board):
 	print(header_string)
 	print("     ---------------------------------")
 
+	print("PTM: ", highlight_piece_to_move[:-1])
+
 	# print middle part
 	for row in range(0, 8):
-		eval_row = 8-row
+		eval_row = 8 - row
 		print(" ", eval_row, " | ", end = "")
 		for col in range(0, 8):
-			fetch_piece = " " if print_board[7-row, col] == "" else print_board[7-row, col]
-			print(fetch_piece, " | ", end = "", sep = "")
+			# hightlight possible moves with that piece (given by 'highlight_piece_to_move')
+			search_str_arr = str(7-row) + str(col)
+			if search_str_arr in highlight_fields:
+				# no enemy piece on the field to move (-> mark this field with '+')
+				if print_board[7-row, col] == "":
+					fetch_piece = Fore.RED + "+" + Style.RESET_ALL
+				# enemy piece on field -> colorise it red
+				else:
+					fetch_piece = Fore.RED + print_board[7-row, col] + Style.RESET_ALL
+
+				print(fetch_piece + " | ", end = "", sep = "")
+			else:
+				# highlight piece which is about to move blue
+				if highlight_piece_to_move[:-1] == search_str_arr:
+					fetch_piece = Fore.BLUE + print_board[7-row, col] + Style.RESET_ALL
+				# default coloring
+				else:
+					fetch_piece = " " if print_board[7-row, col] == "" else print_board[7-row, col]
+
+				print(fetch_piece, " | ", end = "", sep = "")
+
 		print("", eval_row)
 		print("     ---------------------------------")
 
