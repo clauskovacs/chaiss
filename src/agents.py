@@ -64,7 +64,7 @@ class RandomAgent:
 		random_piece_on_board = 1
 
 		# change and return the board state with the taken move
-		i = 2
+		i = 3
 		j = 3
 
 		'''
@@ -75,7 +75,7 @@ class RandomAgent:
 		chess_board[1, 3] = "o"
 		'''
 
-		chess_board[i, j] = "r"
+		chess_board[i, j] = "b"
 		pieces_on_board[random_piece_on_board] = str(i) + str(j) + chess_board[i, j]
 
 
