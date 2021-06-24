@@ -118,6 +118,10 @@ def valid_move_for_piece(chess_board, piece_position, player_color):
 	piece_col_pos = int(piece_position[1])
 	piece_id = piece_position[2]
 
+	assert ((player_color == 'black' and piece_id.isupper())
+		or (player_color == 'white' and piece_id.islower())
+	), print('Error: piece to move and player color do not match')
+
 	# check, whether the given piece position matches the one in the board
 	assert  piece_id == chess_board[piece_row_pos, piece_col_pos]	\
 	, 'Error: mismatching information of pieces in valid_move_for_piece()'
@@ -203,8 +207,62 @@ def valid_move_for_piece(chess_board, piece_position, player_color):
 						piece_col_pos + 1
 					)
 
-	# rook
-	if piece_id.lower() == chess_pieces_inverse["rook"].lower():
+	# knight
+	if piece_id.lower() == chess_pieces_inverse["knight"].lower():
+		# numpy array containing the eight possible moves of that knight
+		possible_moves_knight = np.zeros(shape = (8, 2), dtype = int)
+
+		# generate an array containing the eight possible moves with the
+		# knight from it's starting position
+		index = 0
+		for i in range(-2, 4, 4):
+			for j in range(-1, 2, 2):
+				possible_moves_knight[index] = (piece_row_pos + i, piece_col_pos + j)
+				index += 1
+				possible_moves_knight[index] = (piece_row_pos + j, piece_col_pos + i)
+				index += 1
+
+		# go through each position. If it is inside the board and not occupied
+		# by an own piece, push this position to the array 'possible_moves'
+		for i in range(8):
+			check_position_row = possible_moves_knight[i][0]
+			check_position_col = possible_moves_knight[i][1]
+
+			if (check_position_row > -1
+				and check_position_row < 8
+				and check_position_col > -1
+				and check_position_col < 8
+				):
+				# empty target tile
+				if chess_board[check_position_row, check_position_col] == "":
+					possible_moves = add_to_poss_moves(
+						possible_moves,
+						check_position_row,
+						check_position_col
+					)
+				# player is white, target piece is black
+				elif (piece_id.islower()
+				and chess_board[check_position_row, check_position_col].isupper()
+				):
+					possible_moves = add_to_poss_moves(
+						possible_moves,
+						check_position_row,
+						check_position_col
+					)
+				# player is black, target piece is white
+				elif (piece_id.isupper()
+				and chess_board[check_position_row, check_position_col].islower()
+				):
+					possible_moves = add_to_poss_moves(
+						possible_moves,
+						check_position_row,
+						check_position_col
+					)
+
+	# rook or queen
+	if (piece_id.lower() == chess_pieces_inverse["rook"].lower()
+		or piece_id.lower() == chess_pieces_inverse["queen"].lower()
+	):
 		# obstacle_* == True -> piece in direction detected
 		obstacle_north = False
 		obstacle_south = False
@@ -310,61 +368,10 @@ def valid_move_for_piece(chess_board, piece_position, player_color):
 							piece_col_pos - i - 1
 						)
 
-	# knight
-	if piece_id.lower() == chess_pieces_inverse["knight"].lower():
-		# numpy array containing the eight possible moves of that knight
-		possible_moves_knight = np.zeros(shape = (8, 2), dtype = int)
-
-		# generate an array containing the eight possible moves with the
-		# knight from it's starting position
-		index = 0
-		for i in range(-2, 4, 4):
-			for j in range(-1, 2, 2):
-				possible_moves_knight[index] = (piece_row_pos + i, piece_col_pos + j)
-				index += 1
-				possible_moves_knight[index] = (piece_row_pos + j, piece_col_pos + i)
-				index += 1
-
-		# go through each position. If it is inside the board and not occupied
-		# by an own piece, push this position to the array 'possible_moves'
-		for i in range(8):
-			check_position_row = possible_moves_knight[i][0]
-			check_position_col = possible_moves_knight[i][1]
-
-			if (check_position_row > -1
-				and check_position_row < 8
-				and check_position_col > -1
-				and check_position_col < 8
-				):
-				# empty target tile
-				if chess_board[check_position_row, check_position_col] == "":
-					possible_moves = add_to_poss_moves(
-						possible_moves,
-						check_position_row,
-						check_position_col
-					)
-				# player is white, target piece is black
-				elif (piece_id.islower()
-				and chess_board[check_position_row, check_position_col].isupper()
-				):
-					possible_moves = add_to_poss_moves(
-						possible_moves,
-						check_position_row,
-						check_position_col
-					)
-				# player is black, target piece is white
-				elif (piece_id.isupper()
-				and chess_board[check_position_row, check_position_col].islower()
-				):
-					possible_moves = add_to_poss_moves(
-						possible_moves,
-						check_position_row,
-						check_position_col
-					)
-
-	# bishop
-	if piece_id.lower() == chess_pieces_inverse["bishop"].lower():
-		print("bishop")
+	# bishop or queen
+	if (piece_id.lower() == chess_pieces_inverse["bishop"].lower()
+		or piece_id.lower() == chess_pieces_inverse["queen"].lower()
+	):
 		# obstacle_* == True -> piece in direction detected
 		obstacle_NE = False	# northeast
 		obstacle_SE = False	# southeast
@@ -493,8 +500,6 @@ def valid_move_for_piece(chess_board, piece_position, player_color):
 							piece_row_pos + i + 1,
 							piece_col_pos - i - 1
 						)
-
-
 
 
 	return possible_moves

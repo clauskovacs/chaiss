@@ -15,7 +15,13 @@ class RandomAgent:
 	def __init__(self, assign_player_color):
 		print('init random agent\n')
 
-		self.player_color = assign_player_color	# "black" or "white"
+		if assign_player_color != "black" and assign_player_color != "white":
+			error_message = ("Error: assigned player color is neither 'black'"
+				"or 'white'(assigned color: " + assign_player_color + ")"
+			)
+			raise ValueError(error_message)
+		else:
+			self.player_color = assign_player_color
 
 	#########################################################################
 	# used by: generate_move(). Given the player color ("black" or "white")	#
@@ -75,9 +81,8 @@ class RandomAgent:
 		chess_board[1, 3] = "o"
 		'''
 
-		chess_board[i, j] = "b"
+		chess_board[i, j] = "Q"
 		pieces_on_board[random_piece_on_board] = str(i) + str(j) + chess_board[i, j]
-
 
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
