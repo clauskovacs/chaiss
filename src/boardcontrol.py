@@ -111,7 +111,7 @@ def add_to_poss_moves(possible_moves, piece_row_pos, piece_col_pos):
 #################################################################
 def valid_move_for_piece(chess_board, piece_position, player_color):
 	# TODO: add en passant and promotion for pawns
-	print("DET VALID MOVE: ", piece_position)
+	print("DETERMINE VALID MOVE: ", piece_position)
 
 	# unpack the state of the piece which is should be moved
 	piece_row_pos = int(piece_position[0])
@@ -259,7 +259,7 @@ def valid_move_for_piece(chess_board, piece_position, player_color):
 						check_position_col
 					)
 
-	# rook or queen
+	# rook or queen (queen = rook + bishop)
 	if (piece_id.lower() == chess_pieces_inverse["rook"].lower()
 		or piece_id.lower() == chess_pieces_inverse["queen"].lower()
 	):
@@ -501,6 +501,37 @@ def valid_move_for_piece(chess_board, piece_position, player_color):
 							piece_col_pos - i - 1
 						)
 
+	# king
+	if piece_id.lower() == chess_pieces_inverse["king"].lower():
+		# iterate over the eight next neighbours
+		for i in [-1, 0, 1]:
+			for j in [-1, 0, 1]:
+				"""
+				only add the position, if the target is in the boundary
+				of the board and it is not the piece which is going to
+				be moved itself
+				"""
+				if (
+					(j != 0 or i != 0)
+					and
+					(
+						0 <= piece_row_pos + i < 8
+						and 0 <= piece_col_pos + j < 8
+					)
+				):
+					# what is on the board at the position we check at the moment?
+					move_to_check = chess_board[piece_row_pos + i, piece_col_pos + j]
+
+					# enemy piece on this position or it is empty
+					# (add this position to the list of possible moves)
+					if ((piece_id.isupper() == move_to_check.islower())
+						or move_to_check == ""
+					):
+						possible_moves = add_to_poss_moves(
+							possible_moves,
+							piece_row_pos + i,
+							piece_col_pos + j
+						)
 
 	return possible_moves
 

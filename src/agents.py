@@ -71,7 +71,7 @@ class RandomAgent:
 
 		# change and return the board state with the taken move
 		i = 3
-		j = 3
+		j = 4
 
 		'''
 		chess_board[4, 3] = "x"
@@ -81,7 +81,7 @@ class RandomAgent:
 		chess_board[1, 3] = "o"
 		'''
 
-		chess_board[i, j] = "Q"
+		chess_board[i, j] = "k"
 		pieces_on_board[random_piece_on_board] = str(i) + str(j) + chess_board[i, j]
 
 		possible_moves = boardcontrol.valid_move_for_piece(

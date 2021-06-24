@@ -24,7 +24,7 @@ player1 = agents.RandomAgent("white")
 player2 = agents.RandomAgent("black")
 
 # generate a move for player1
-chess_board, piece_to_move, return_possible_moves = player2.generate_move(chess_board)
+chess_board, piece_to_move, return_possible_moves = player1.generate_move(chess_board)
 
 # print the current state of the board
 boardcontrol.print_board(chess_board, piece_to_move, return_possible_moves)
