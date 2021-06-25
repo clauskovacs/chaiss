@@ -13,7 +13,7 @@ import boardcontrol
 # agent which plays a random piece each turn
 class RandomAgent:
 	def __init__(self, assign_player_color):
-		print('init random agent')
+		boardcontrol.add_info_msg("initialise random agent (" + assign_player_color + ")")
 
 		if assign_player_color != "black" and assign_player_color != "white":
 			error_message = ("Error: assigned player color is neither 'black'"
@@ -102,9 +102,9 @@ class RandomAgent:
 
 		return chess_board, pieces_on_board[random_piece_on_board], possible_moves
 
-	##########################################
-	# check, whether the king is under check #
-	##########################################
+	####################################################
+	# determine, whether the (own) king is under check #
+	####################################################
 	def check_check(self, chess_board):
 		# determine the position of the king which should be
 		# scrutinized for check
@@ -185,3 +185,70 @@ class RandomAgent:
 			king_is_in_check = False
 
 		return king_is_in_check, possible_moves_all_enemy_pieces
+
+
+
+	###################################
+	# determine if the game has ended #
+	###################################
+	def game_has_ended(self, chess_board):
+		boardcontrol.add_info_msg("determine if game has ended")
+
+		"""
+		checkmate (win / lose):
+			if the king of a player is threatened and it (the king)
+			can't move or can't be protected (other piece is moved in between
+			or the threatening piece is captured), this player loses the game.
+		"""
+
+
+
+		"""
+		resignation (win / lose):
+			a player offers a resignation (to end the game prematurely), e.g., when
+			a check mate is immanent and can't be avoided by the player
+		"""
+
+
+		"""
+		timeout (win / lose):
+			only relevant in a timed match (a match with a certain given time limit)
+		"""
+
+
+		"""
+		draw (tie):
+			1. stalemate: 
+				a player is not in check but has no other (legal) move
+			2. insufficient material:
+				when both players have insufficient material (amount of pieces)
+				on the board.
+				a) king vs. king
+				b) king + minor piece (bishop or knight) vs. king
+				c) lone king vs all pieces (while running out of time):
+					if, e.g., white has all pieces and black only the king but
+					white runs out of time this game is considered a draw. This
+					is sometimes called "timeout vs. insufficient material"
+				d) king + two knights vs. king
+				e) king + minor piece vs. king + minor piece:
+					bishop and knight are considered minor pieces
+			3. 50 move-rule:
+				no capture has been made or no pawn has been moved in the
+				last 50 moves.
+			4. repetition (threefold-repetition rule):
+				if a board position arises three times in a game, either player
+				can claim a draw.
+			5. agreement:
+				when both players decide they want a draw.
+		"""
+
+
+
+
+
+
+
+
+
+
+

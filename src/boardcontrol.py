@@ -6,6 +6,7 @@ This file contains all the logic setting up and managing the board.
 '''
 
 import numpy as np
+import collections
 
 #install colorama using 'sudo python3 -m pip install colorama'
 from colorama import Fore, Style, init
@@ -24,13 +25,19 @@ chess_pieces = {
 # inverse the dict containing the pieces
 chess_pieces_inverse = {v: k for k, v in chess_pieces.items()}
 
+# information (displayed on the right side of the board)
+info_amt_elements = 19
+information_storage = collections.deque(maxlen = info_amt_elements)
+for i in range(0, info_amt_elements):
+	information_storage.append('')
+
 #########################################################
 # reset a board to its initial starting configuration	#
 # small letters = white pieces							#
 # capital letters = black pieces						#
 #########################################################
 def reset_board(reset_board):
-	print("resetting board")
+	add_info_msg("reset board (small letters ... white)")
 
 	# pawns
 	for i in range(0, 8):
@@ -54,19 +61,47 @@ def reset_board(reset_board):
 
 	return reset_board
 
+#############################################################
+# function which takes the deque containing the information	#
+# which are displayed to the right of the board, fetches	#
+# the entry at its position (defined by info_position) and	#
+# decrements this counter by one.							#
+#############################################################
+def fetch_info_msg(info_position, information_storage):
+	return_info_msg = information_storage[info_position]
+	info_position -= 1
+	return info_position, return_info_msg
+
+#################################################################
+# add an entry into the deque (as soon as the maximum number	#
+# of elements are reached, the whole queue 'shifts', i.e., the	#
+# first added element gets removed, the whole list shifts 'up'	#
+# and the last element (provided to the function) is added		#
+#################################################################
+def add_info_msg(add_info_msg):
+	information_storage.append(add_info_msg)
+
 #########################################
 # print a board state (to the console)	#
 #########################################
 def print_board(print_board, highlight_piece_to_move = '', highlight_fields = ''):
-	print("print board state (small letters = white)")
-	#print("hightlight fields: ", highlight_fields)
+	# information formatting (text to the right of the board)
+	info_padding = 2	# distance: board to the information text
+	info_position = info_amt_elements - 1	# position in the deque which is being printed
+
+	info_position, return_info_msg = fetch_info_msg(info_position, information_storage)
+
+	# clear the terminal
+	print(chr(27) + "[2J")
 
 	# print header
-	header_entries = ["a", "b", "c", "d", "e", "f", "g", "h"]
-	header_string = "   ".join(header_entries)
-	header_string = "       " + header_string
+	header_footer_entries = ["a", "b", "c", "d", "e", "f", "g", "h"]
+	header_footer_entries = "   ".join(header_footer_entries)
+	header_string = "       " + header_footer_entries + (info_padding + 7) * " " + "| " + return_info_msg
 	print(header_string)
-	print("     ---------------------------------")
+
+	info_position, return_info_msg = fetch_info_msg(info_position, information_storage)
+	print("     ---------------------------------", (info_padding + 3) * " ", "|", return_info_msg)
 
 	# print middle part
 	for row in range(0, 8):
@@ -94,11 +129,18 @@ def print_board(print_board, highlight_piece_to_move = '', highlight_fields = ''
 
 				print(fetch_piece, " | ", end = "", sep = "")
 
-		print("", eval_row)
-		print("     ---------------------------------")
+		info_position, return_info_msg = fetch_info_msg(info_position, information_storage)
+		print("", eval_row, info_padding * " ", "|", return_info_msg)
+
+		info_position, return_info_msg = fetch_info_msg(info_position, information_storage)
+		print("     ---------------------------------", (info_padding + 3) * " ", "|", return_info_msg)
 
 	# print footer
-	print(header_string)
+	return_info_msg = information_storage[info_position]
+	info_position += 1
+	footer_string = "       " + header_footer_entries + (info_padding + 7) * " " + "| " + return_info_msg
+	print(footer_string)
+	print("\n>", end = "", sep = "")
 
 def add_to_poss_moves(possible_moves, piece_row_pos, piece_col_pos):
 	possible_moves = np.append(
