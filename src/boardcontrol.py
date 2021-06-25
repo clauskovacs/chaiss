@@ -111,16 +111,19 @@ def add_to_poss_moves(possible_moves, piece_row_pos, piece_col_pos):
 #################################################################
 def valid_move_for_piece(chess_board, piece_position, player_color):
 	# TODO: add en passant and promotion for pawns
-	print("DETERMINE VALID MOVE: ", piece_position)
+	# TODO: add castling which moves two pieces at the same time
 
 	# unpack the state of the piece which is should be moved
 	piece_row_pos = int(piece_position[0])
 	piece_col_pos = int(piece_position[1])
 	piece_id = piece_position[2]
 
+	"""
+	-> check_check(self, chess_board) breaks this assertion
 	assert ((player_color == 'black' and piece_id.isupper())
 		or (player_color == 'white' and piece_id.islower())
 	), print('Error: piece to move and player color do not match')
+	"""
 
 	# check, whether the given piece position matches the one in the board
 	assert  piece_id == chess_board[piece_row_pos, piece_col_pos]	\
@@ -534,4 +537,3 @@ def valid_move_for_piece(chess_board, piece_position, player_color):
 						)
 
 	return possible_moves
-
