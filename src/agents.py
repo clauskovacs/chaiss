@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python3
 
-'''
+"""
 This file contains the different computer players
-'''
+"""
 
 import numpy as np
 import random
@@ -23,14 +23,15 @@ class RandomAgent:
 		else:
 			self.player_color = assign_player_color
 
-	#########################################################################
-	# used by: generate_move(). Given the player color ("black" or "white")	#
-	# this function returns an array with all positions and pieces given	#
-	# for the board state. E.g. it returns: ['00r' '01n' ... '16p' '17p']	#
-	# with each of the three entries in the array being the row, column and	#
-	# identification of the pieces, respectively.
-	#########################################################################
 	def fetch_all_pieces(self, chess_board):
+		"""For a given board, this function determines all pieces (for the player).
+
+		Used by: generate_move(). Given the player color ("black" or "white")
+		this function returns an array with all positions and pieces given
+		for the board state. E.g. it returns: ['00r' '01n' ... '16p' '17p']
+		with each of the three characters in each array entry being the row,
+		column and type of the piece, respectively.
+		"""
 		pieces_on_board = np.empty([0], dtype = str)
 
 		for row in range(0, 8):
@@ -46,20 +47,19 @@ class RandomAgent:
 
 		return pieces_on_board
 
-	#####################################################
-	# generate a (random) move for a given piece		#
-	# chess_board is the state of the board (8x8 array)	#
-	# and piece_to_move is the piece which is being		#
-	# moved, indicated by, e.g., "12p", which denotes	#
-	# a white pawn at the location 2b on the board		#
-	#####################################################
 	def generate_random_move(self, chess_board, piece_to_move):
+		"""This function generates a random move for a piece.
+
+		generate a (random) move for a given piece
+		chess_board is the state of the board (8x8 array)
+		and piece_to_move is the piece which is being
+		moved, indicated by, e.g., "12p", which denotes
+		a white pawn at the location 2b on the board
+		"""
 		print("generate random move: ", piece_to_move)
 
-	#####################################################
-	# generate a (valid) move for the given board state	#
-	#####################################################
 	def generate_move(self, chess_board):
+		'''Generate a (valid) move for the given board state.'''
 		print("generating a move")
 
 		pieces_on_board = self.fetch_all_pieces(chess_board)
@@ -102,10 +102,13 @@ class RandomAgent:
 
 		return chess_board, pieces_on_board[random_piece_on_board], possible_moves
 
-	####################################################
-	# determine, whether the (own) king is under check #
-	####################################################
 	def check_check(self, chess_board):
+		"""Determine, whether the (own) king is under check.
+		
+		All possible moves by (all) the enemy pieces are
+		determined. If the king is on such a position, it
+		is in check.
+		"""
 		# determine the position of the king which should be
 		# scrutinized for check
 		if self.player_color == "white":
@@ -186,12 +189,8 @@ class RandomAgent:
 
 		return king_is_in_check, possible_moves_all_enemy_pieces
 
-
-
-	###################################
-	# determine if the game has ended #
-	###################################
 	def game_has_ended(self, chess_board):
+		'''Determine if the game has ended (checkmate, timeout, draw).'''
 		boardcontrol.add_info_msg("determine if game has ended")
 
 		"""
@@ -241,14 +240,5 @@ class RandomAgent:
 			5. agreement:
 				when both players decide they want a draw.
 		"""
-
-
-
-
-
-
-
-
-
 
 

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python3
 
-'''
+"""
 This file contains all the logic setting up and managing the board.
-'''
+"""
 
 import numpy as np
 import collections
@@ -31,12 +31,12 @@ information_storage = collections.deque(maxlen = info_amt_elements)
 for i in range(0, info_amt_elements):
 	information_storage.append('')
 
-#########################################################
-# reset a board to its initial starting configuration	#
-# small letters = white pieces							#
-# capital letters = black pieces						#
-#########################################################
 def reset_board(reset_board):
+	"""Reset a board to its initial starting configuration.
+
+	White pieces are represented by small letters and
+	capital letters denote black pieces.
+	"""
 	add_info_msg("reset board (small letters ... white)")
 
 	# pawns
@@ -61,30 +61,31 @@ def reset_board(reset_board):
 
 	return reset_board
 
-#############################################################
-# function which takes the deque containing the information	#
-# which are displayed to the right of the board, fetches	#
-# the entry at its position (defined by info_position) and	#
-# decrements this counter by one.							#
-#############################################################
 def fetch_info_msg(info_position, information_storage):
+	"""Fetching information written right to the board (of the deque obj.).
+
+	Function which takes the deque containing the information
+	which are displayed to the right of the board, fetches
+	the entry at its position (defined by info_position) and
+	decrements this counter by one.
+	"""
 	return_info_msg = information_storage[info_position]
 	info_position -= 1
 	return info_position, return_info_msg
 
-#################################################################
-# add an entry into the deque (as soon as the maximum number	#
-# of elements are reached, the whole queue 'shifts', i.e., the	#
-# first added element gets removed, the whole list shifts 'up'	#
-# and the last element (provided to the function) is added		#
-#################################################################
 def add_info_msg(add_info_msg):
+	"""Information to the right of the board (add a message to the deque).
+
+	Add an entry into the deque (as soon as the maximum number
+	of elements are reached, the whole queue 'shifts', i.e., the
+	first added element gets removed, the whole list shifts 'up'
+	and the last element (provided to the function) is added.
+	"""
 	information_storage.append(add_info_msg)
 
-#########################################
-# print a board state (to the console)	#
-#########################################
+
 def print_board(print_board, highlight_piece_to_move = '', highlight_fields = ''):
+	'''Print a board state (to the console).'''
 	# information formatting (text to the right of the board)
 	info_padding = 2	# distance: board to the information text
 	info_position = info_amt_elements - 1	# position in the deque which is being printed
@@ -148,10 +149,15 @@ def add_to_poss_moves(possible_moves, piece_row_pos, piece_col_pos):
 		)
 	return possible_moves
 
-#################################################################
-# determine the valid moves for a given piece and board state	#
-#################################################################
 def valid_move_for_piece(chess_board, piece_position, player_color):
+	"""Determine the valid moves for a given piece and board state.
+	
+	This function takes any piece (king, queen, rook, bishop, knight, pawn),
+	e.g., piece_position = "11r" means a rook at position 11 on the board should
+	be moved. For the given board state, all possible moves (including enemy
+	pieces which can be captured) are determined and returned in the array
+	possible_moves via this function.
+	"""
 	# TODO: add en passant and promotion for pawns
 	# TODO: add castling which moves two pieces at the same time
 

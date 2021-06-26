@@ -9,7 +9,6 @@ from queue import Queue
 import threading
 import time
 
-
 import agents
 import boardcontrol
 import windowhandler as wndhandler
@@ -17,7 +16,7 @@ import windowhandler as wndhandler
 
 
 if __name__ == '__main__':
-	
+
 	# reduce the time it takes to close the window then the ESC key
 	# has been pressed (to 10 milliseconds)
 	os.environ.setdefault('ESCDELAY', '10')
