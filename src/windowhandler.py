@@ -28,8 +28,6 @@ class WindowHandler:
 		else:
 			curses.noecho()
 
-		#curses.use_default_colors()
-
 	def __del__(self):
 		curses.endwin()
 
@@ -37,11 +35,21 @@ class WindowHandler:
 		self.scr.addstr(message_to_print)
 
 	def change_queue(self, q):
-		q.put("1")
+		q.put("X  ")
 
-	def main_loop(self, q):
+	def main_window_loop(self, q):
+		"""Contains the loop which handles drawing and keyboard interactions.
+
+		This functions runs in an own thread and handles user inputs as well
+		as output into the terminal. Pressing of keys (arrow keys, ESC, etc.)
+		are handled. The logic runs separately, independently from this loop
+		and transfer of information between them (these two) is realised using
+		Queue objects.
+		"""
 		while 1:
-			c = self.scr.getch()
+			start_time = time.process_time()
+
+			c = self.scr.getch()	# detect (get) key press
 
 			if c == curses.KEY_ENTER or c == 10 or c == 13:
 				self.scr.addstr("ENTER\n")
@@ -58,27 +66,19 @@ class WindowHandler:
 			if c == curses.KEY_DOWN:
 				self.scr.addstr("DOWN")
 
-			# read the cursor position
+			# get the current cursor position
 			x, y = self.scr.getyx()
 
 			# end of the screen (height) reached -> clear the screen
 			if x > self.wnd_height - 2:
 				self.scr.erase()
 
-			#if c == ord('q'):
-				#pass
-
-			if c == 27:
-				#scr.addstr("DOWN")
+			if c == 27:	# ESC key
 				break
 
 			if q.empty() == False:	# queue is _not_ empty
 				fetch = q.get()		# remove an item from the queue
 				self.scr.addstr(str(fetch))
-
-			#self.scr.addstr(str(q.qsize()) + " <-> " + str(q.empty()))
-			self.scr.addstr("A")
-			time.sleep(0.1)
 
 			# user resizes the window manually
 			if c == curses.KEY_RESIZE:
@@ -93,6 +93,9 @@ class WindowHandler:
 					+ ")"
 				)
 
-			self.scr.refresh()
-
-		return False
+			# write the time it took the program to execute to the screen
+			self.scr.addstr(str(
+				time.process_time()
+				- start_time)
+				+ "\n"
+			)

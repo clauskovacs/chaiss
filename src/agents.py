@@ -10,8 +10,8 @@ import random
 
 import boardcontrol
 
-# agent which plays a random piece each turn
 class RandomAgent:
+	'''Agent which plays a random piece each turn.'''
 	def __init__(self, assign_player_color):
 		boardcontrol.add_info_msg("initialise random agent (" + assign_player_color + ")")
 

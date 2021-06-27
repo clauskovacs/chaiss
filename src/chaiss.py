@@ -13,8 +13,6 @@ import agents
 import boardcontrol
 import windowhandler as wndhandler
 
-
-
 if __name__ == '__main__':
 
 	# reduce the time it takes to close the window then the ESC key
@@ -27,26 +25,25 @@ if __name__ == '__main__':
 	# define a queue object to transfer information to the thread
 	q = Queue(maxsize = 0)
 
-	test = wndhandler.WindowHandler(screen)
+	window = wndhandler.WindowHandler(screen)
 
-	test.print_msg_to_screen("Number of CPU cores: "
+	window.print_msg_to_screen("Number of CPU cores: "
 		+ str(multiprocessing.cpu_count()) + "\n"
 	)
-	
-	window_print_thread = threading.Thread(target = test.main_loop, args = (q,))
+
+	# define the thread which manages drawing on the screen
+	# and keyboard inputs by the user
+	window_print_thread = threading.Thread(
+		target = window.main_window_loop,
+		args = (q,)
+	)
 	window_print_thread.daemon = True
 	window_print_thread.start()
 
-
+	# the 'game loop' which manages agents and the board logic, etc.
 	while window_print_thread.is_alive():
-	#while True:
-		#q.put("1")
-		test.change_queue(q)
-		time.sleep(0.5)
-
-	curses.endwin()
-
-
+		#q.put("MM")
+		window.change_queue(q)
 
 
 	"""
