@@ -6,14 +6,25 @@ import numpy as np
 import multiprocessing
 import os
 from queue import Queue
+import sys
 import threading
 import time
 
 import agents
 import boardcontrol
-import windowhandler as wndhandler
+import windowhandler
+import stdoutwrapper
 
 if __name__ == '__main__':
+	# std console wrapper (put text to the console after the curses window is closed)
+	mystdout = stdoutwrapper.StdOutWrapper()
+	sys.stdout = mystdout
+	sys.stderr = mystdout
+	mystdout.write("write\nsome\ndummy\ntext for testing")	# add some dummy tet for testing
+
+	########################################
+	# control logic (keyboard, and screen) #
+	########################################
 
 	# reduce the time it takes to close the window then the ESC key
 	# has been pressed (to 10 milliseconds)
@@ -25,11 +36,13 @@ if __name__ == '__main__':
 	# define a queue object to transfer information to the thread
 	q = Queue(maxsize = 0)
 
-	window = wndhandler.WindowHandler(screen)
+	window = windowhandler.WindowHandler(screen)
 
+	"""
 	window.print_msg_to_screen("Number of CPU cores: "
 		+ str(multiprocessing.cpu_count()) + "\n"
 	)
+	"""
 
 	# define the thread which manages drawing on the screen
 	# and keyboard inputs by the user
@@ -40,11 +53,24 @@ if __name__ == '__main__':
 	window_print_thread.daemon = True
 	window_print_thread.start()
 
-	# the 'game loop' which manages agents and the board logic, etc.
+
+	######################
+	# game logic/control #
+	######################
+
+	# intialise an unpopulated board
+	chess_board = np.empty([8, 8], dtype = str)
+
+	# reset (and populate / initiate) the board
+	chess_board = boardcontrol.reset_board(chess_board)
+
+	# the 'game logic loop' which manages agents, player interactions, etc.
 	while window_print_thread.is_alive():
 		#q.put("MM")
 		window.change_queue(q)
 
+	# delete the object to be able to write to the terminal
+	del window
 
 	"""
 	# intialise an unpopulated board
@@ -74,3 +100,12 @@ if __name__ == '__main__':
 	player1.game_has_ended(chess_board)
 	boardcontrol.print_board(chess_board)
 	"""
+
+	# print the logged text into the standard console after the curses
+	# window is closed.
+	sys.stdout = sys.__stdout__
+	sys.stderr = sys.__stderr__
+	sys.stdout.write(mystdout.get_text(0, 5))
+
+	# empty all queues
+	q.queue.clear()

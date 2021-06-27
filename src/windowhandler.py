@@ -17,8 +17,8 @@ class WindowHandler:
 		## fetch the current (terminal) window size
 		self.wnd_height, self.wnd_width = self.scr.getmaxyx()
 
-		## enable non-blocking mode, i.e., getch() does not halt
-		## the process until a key is pressed
+		# enable non-blocking mode, i.e., getch() does not halt
+		# the process until a key is pressed
 		self.scr.nodelay(True)
 
 		# print the pressed buttons to the screen or not
@@ -47,7 +47,7 @@ class WindowHandler:
 		Queue objects.
 		"""
 		while 1:
-			start_time = time.process_time()
+			#start_time = time.process_time()
 
 			c = self.scr.getch()	# detect (get) key press
 
@@ -76,9 +76,11 @@ class WindowHandler:
 			if c == 27:	# ESC key
 				break
 
+			"""
 			if q.empty() == False:	# queue is _not_ empty
 				fetch = q.get()		# remove an item from the queue
 				self.scr.addstr(str(fetch))
+			"""
 
 			# user resizes the window manually
 			if c == curses.KEY_RESIZE:
@@ -93,9 +95,11 @@ class WindowHandler:
 					+ ")"
 				)
 
+			"""
 			# write the time it took the program to execute to the screen
 			self.scr.addstr(str(
 				time.process_time()
 				- start_time)
 				+ "\n"
 			)
+			"""
