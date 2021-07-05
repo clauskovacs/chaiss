@@ -16,7 +16,7 @@ import windowhandler
 import stdoutwrapper
 
 if __name__ == '__main__':
-	# std console wrapper (put text to the console after the curses window is closed)
+	# std console wrapper (put text to the console after the curses terminal is closed)
 	mystdout = stdoutwrapper.StdOutWrapper()
 	sys.stdout = mystdout
 	sys.stderr = mystdout
@@ -26,20 +26,21 @@ if __name__ == '__main__':
 	# control logic (keyboard, and screen) #
 	########################################
 
-	# reduce the time it takes to close the window then the ESC key
-	# has been pressed (to 10 milliseconds)
+	# reduce the time it takes to close the curses terminal when the
+	# ESC key has been pressed (to 10 milliseconds)
 	os.environ.setdefault('ESCDELAY', '10')
 
 	# set the curses screen identifier
 	screen = curses.initscr()
 
-	# define a queue object to transfer information to the thread
+	# define a queue object (with infinite size) to
+	# exchange information between the thread(s)
 	q = Queue(maxsize = 0)
 
 	window = windowhandler.WindowHandler(screen)
 
 	"""
-	window.print_msg_to_screen("Number of CPU cores: "
+	window.print_message("Number of CPU cores: "
 		+ str(multiprocessing.cpu_count()) + "\n"
 	)
 	"""
@@ -52,7 +53,6 @@ if __name__ == '__main__':
 	)
 	window_print_thread.daemon = True
 	window_print_thread.start()
-
 
 	######################
 	# game logic/control #
@@ -68,6 +68,13 @@ if __name__ == '__main__':
 	while window_print_thread.is_alive():
 		#q.put("MM")
 		window.change_queue(q)
+
+		#window.print_message("A")
+
+		# print the current state of the board
+		boardcontrol.print_board(chess_board, window)
+
+		time.sleep(0.001)
 
 	# delete the object to be able to write to the terminal
 	del window

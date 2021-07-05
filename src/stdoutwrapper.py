@@ -7,7 +7,7 @@ https://stackoverflow.com/questions/14010073/print-to-standard-console-in-curses
 """
 
 class StdOutWrapper:
-	"""Wrapper for text to be written to the 'std console' after, e.g., curses is closed.
+	"""Wrapper for text to be written to the 'std console' post curses console closing.
 	
 	Add text using write() into the buffer and retrive it using get_text().
 	"""

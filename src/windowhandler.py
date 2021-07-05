@@ -31,8 +31,17 @@ class WindowHandler:
 	def __del__(self):
 		curses.endwin()
 
-	def print_msg_to_screen(self, message_to_print):
+	def clear_screen(self):
+		self.scr.erase()
+
+	def print_message(self, message_to_print):
 		self.scr.addstr(message_to_print)
+
+		# get the current cursor position
+		x, y = self.scr.getyx()
+
+		if x > self.wnd_height - 2:
+			self.clear_screen()
 
 	def change_queue(self, q):
 		q.put("X  ")
