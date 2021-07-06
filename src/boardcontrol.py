@@ -67,7 +67,7 @@ def print_board(chess_board, window_object, highlight_piece_to_move = '', highli
 	"""
 	# information formatting (text to the right of the board)
 
-	info_padding = 3	# distance: board to the information text
+	info_padding = 5	# distance: board to the information text
 
 	# clear the terminal
 	window_object.clear_screen()
@@ -80,7 +80,6 @@ def print_board(chess_board, window_object, highlight_piece_to_move = '', highli
 	window_object.print_message(header_string)
 
 	window_object.print_message("     ---------------------------------" + (info_padding + 3) * " " + " | b \n")
-
 
 	# print middle part
 	for row in range(0, 8):
@@ -114,69 +113,10 @@ def print_board(chess_board, window_object, highlight_piece_to_move = '', highli
 		window_object.print_message("" + str(eval_row) + str((info_padding + 1) * " ") + " | c \n")
 		window_object.print_message("     ---------------------------------" + (info_padding + 3) * " " + " | d \n")
 
-
-
-
-	"""
-	info_position = info_amt_elements - 1	# position in the deque which is being printed
-
-	info_position, return_info_msg = fetch_info_msg(info_position, information_storage)
-
-	# clear the terminal
-	print(chr(27) + "[2J")
-
-	# print header
-	header_footer_entries = ["a", "b", "c", "d", "e", "f", "g", "h"]
-	header_footer_entries = "   ".join(header_footer_entries)
-	header_string = "       " + header_footer_entries + (info_padding + 7) * " " + "| " + return_info_msg
-	print(header_string)
-
-	info_position, return_info_msg = fetch_info_msg(info_position, information_storage)
-	print("     ---------------------------------", (info_padding + 3) * " ", "|", return_info_msg)
-
-
-
-
-
-	# print middle part
-	for row in range(0, 8):
-		eval_row = 8 - row
-		print(" ", eval_row, " | ", end = "")
-		for col in range(0, 8):
-			# hightlight possible moves with that piece (given by 'highlight_piece_to_move')
-			search_str_arr = str(7 - row) + str(col)
-			if search_str_arr in highlight_fields:
-				# no enemy piece on the field to move (-> mark this field with '+')
-				if chess_board[7 - row, col] == "":
-					fetch_piece = Fore.RED + "+" + Style.RESET_ALL
-				# enemy piece on field -> colorise it red
-				else:
-					fetch_piece = Fore.RED + chess_board[7 - row, col] + Style.RESET_ALL
-
-				print(fetch_piece + " | ", end = "", sep = "")
-			else:
-				# highlight piece which is about to move blue
-				if highlight_piece_to_move[:-1] == search_str_arr:
-					fetch_piece = Fore.BLUE + chess_board[7 - row, col] + Style.RESET_ALL
-				# default coloring
-				else:
-					fetch_piece = " " if chess_board[7 - row, col] == "" else chess_board[7 - row, col]
-
-				print(fetch_piece, " | ", end = "", sep = "")
-
-		info_position, return_info_msg = fetch_info_msg(info_position, information_storage)
-		print("", eval_row, info_padding * " ", "|", return_info_msg)
-
-		info_position, return_info_msg = fetch_info_msg(info_position, information_storage)
-		print("     ---------------------------------", (info_padding + 3) * " ", "|", return_info_msg)
-
 	# print footer
-	return_info_msg = information_storage[info_position]
-	info_position += 1
-	footer_string = "       " + header_footer_entries + (info_padding + 7) * " " + "| " + return_info_msg
-	print(footer_string)
-	print("\n>", end = "", sep = "")
-	"""
+	footer_string = "       " + header_footer_entries + (info_padding + 6) * " " + "| v \n"
+	window_object.print_message(footer_string)
+	window_object.print_message("\n>")
 
 def add_to_poss_moves(possible_moves, piece_row_pos, piece_col_pos):
 	possible_moves = np.append(

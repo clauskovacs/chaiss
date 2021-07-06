@@ -35,7 +35,7 @@ class WindowHandler:
 		self.scr.erase()
 
 	def print_message(self, message_to_print):
-		self.scr.addstr(message_to_print)
+		self.scr.addstr(message_to_print, curses.color_pair(1))
 
 		# get the current cursor position
 		x, y = self.scr.getyx()

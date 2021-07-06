@@ -33,6 +33,14 @@ if __name__ == '__main__':
 	# set the curses screen identifier
 	screen = curses.initscr()
 
+	"""
+	initiate colors in curses and define color pairs, which
+	consist of a font color and a background color.
+	"""
+	curses.start_color()
+	# red font color, white background color
+	curses.init_pair(1, curses.COLOR_RED, curses.COLOR_WHITE)
+
 	# define a queue object (with infinite size) to
 	# exchange information between the thread(s)
 	q = Queue(maxsize = 0)
@@ -66,15 +74,14 @@ if __name__ == '__main__':
 
 	# the 'game logic loop' which manages agents, player interactions, etc.
 	while window_print_thread.is_alive():
-		#q.put("MM")
-		window.change_queue(q)
-
-		#window.print_message("A")
+		#window.change_queue(q)	# put (add) an element to the queue
 
 		# print the current state of the board
 		boardcontrol.print_board(chess_board, window)
 
-		time.sleep(0.001)
+		window.print_message("  " + str(q.qsize()))
+
+		time.sleep(1)
 
 	# delete the object to be able to write to the terminal
 	del window
