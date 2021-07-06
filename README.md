@@ -1,3 +1,5 @@
+![](https://github.com/clauskovacs/chaiss/workflows/unit-test%20(boardcontrol)/badge.svg)
+
 # chaiss
 Playing around with chess 
 
