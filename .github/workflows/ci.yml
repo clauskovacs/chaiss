@@ -1,4 +1,4 @@
-name: tiss-crawler CI
+name: unit-test (boardcontrol)
 on:
   push:
     branches:
