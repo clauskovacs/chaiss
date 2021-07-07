@@ -33,13 +33,11 @@ if __name__ == '__main__':
 	# set the curses screen identifier
 	screen = curses.initscr()
 
-	"""
-	initiate colors in curses and define color pairs, which
-	consist of a font color and a background color.
-	"""
-	curses.start_color()
-	# red font color, white background color
-	curses.init_pair(1, curses.COLOR_RED, curses.COLOR_WHITE)
+	box1 = curses.newwin(20, 20, 5, 5)
+	box1.box()    
+
+	screen.refresh()
+	box1.refresh()
 
 	# define a queue object (with infinite size) to
 	# exchange information between the thread(s)
@@ -49,7 +47,7 @@ if __name__ == '__main__':
 
 	"""
 	window.print_message("Number of CPU cores: "
-		+ str(multiprocessing.cpu_count()) + "\n"
+		+ str(multiprocessing.cpu_count()) + "\n", 1
 	)
 	"""
 
@@ -72,16 +70,29 @@ if __name__ == '__main__':
 	# reset (and populate / initiate) the board
 	chess_board = boardcontrol.reset_board(chess_board)
 
+	## print the current state of the board
+	#boardcontrol.print_board(chess_board)
+
+	## initialise two computer agents
+	player1 = agents.RandomAgent("white")
+	player2 = agents.RandomAgent("black")
+
+	## generate a move for player1
+	chess_board, piece_to_move, return_possible_moves = player2.generate_move(chess_board)
+
+	## print the current state of the board
+	##boardcontrol.print_board(chess_board, piece_to_move, return_possible_moves)
+
 	# the 'game logic loop' which manages agents, player interactions, etc.
 	while window_print_thread.is_alive():
 		#window.change_queue(q)	# put (add) an element to the queue
 
 		# print the current state of the board
-		boardcontrol.print_board(chess_board, window)
+		boardcontrol.print_board(chess_board, window, piece_to_move, return_possible_moves)
 
 		window.print_message("  " + str(q.qsize()))
 
-		time.sleep(1)
+		time.sleep(0.1)
 
 	# delete the object to be able to write to the terminal
 	del window

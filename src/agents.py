@@ -13,7 +13,7 @@ import boardcontrol
 class RandomAgent:
 	'''Agent which plays a random piece each turn.'''
 	def __init__(self, assign_player_color):
-		boardcontrol.add_info_msg("initialise random agent (" + assign_player_color + ")")
+		#boardcontrol.add_info_msg("initialise random agent (" + assign_player_color + ")", 1)
 
 		if assign_player_color != "black" and assign_player_color != "white":
 			error_message = ("Error: assigned player color is neither 'black'"
@@ -191,7 +191,7 @@ class RandomAgent:
 
 	def game_has_ended(self, chess_board):
 		'''Determine if the game has ended (checkmate, timeout, draw).'''
-		boardcontrol.add_info_msg("determine if game has ended")
+		#boardcontrol.add_info_msg("determine if game has ended")
 
 		"""
 		checkmate (win / lose):

@@ -56,7 +56,8 @@ def reset_board(reset_board):
 
 	return reset_board
 
-def print_board(chess_board, window_object, highlight_piece_to_move = '', highlight_fields = ''):
+def print_board(chess_board, window_object,
+	highlight_piece_to_move = '', highlight_fields = ''):
 	"""Print a board state (to the console).
 	
 	The arguments of this function are:
@@ -79,7 +80,9 @@ def print_board(chess_board, window_object, highlight_piece_to_move = '', highli
 
 	window_object.print_message(header_string)
 
-	window_object.print_message("     ---------------------------------" + (info_padding + 3) * " " + " | b \n")
+	window_object.print_message("     ---------------------------------"
+		+(info_padding + 3) * " " + " | b \n"
+	)
 
 	# print middle part
 	for row in range(0, 8):
@@ -88,30 +91,40 @@ def print_board(chess_board, window_object, highlight_piece_to_move = '', highli
 		for col in range(0, 8):
 			# hightlight possible moves with that piece (given by 'highlight_piece_to_move')
 			search_str_arr = str(7 - row) + str(col)
+
+			draw_color = 0
+
 			if search_str_arr in highlight_fields:
 				# no enemy piece on the field to move (-> mark this field with '+')
 				if chess_board[7 - row, col] == "":
 					fetch_piece = "+"
 					#fetch_piece = Fore.RED + "+" + Style.RESET_ALL
+					draw_color = 1
 				# enemy piece on field -> colorise it red
 				else:
 					fetch_piece = chess_board[7 - row, col]
 					#fetch_piece = Fore.RED + chess_board[7 - row, col] + Style.RESET_ALL
+					draw_color = 1
 
-				window_object.print_message(str(fetch_piece) + " | ")
+				window_object.print_message(str(fetch_piece), draw_color)
+				window_object.print_message(" | ")
 			else:
 				# highlight piece which is about to move blue
 				if highlight_piece_to_move[:-1] == search_str_arr:
 					fetch_piece = chess_board[7 - row, col]
 					#fetch_piece = Fore.BLUE + chess_board[7 - row, col] + Style.RESET_ALL
+					draw_color = 2
 				# default coloring
 				else:
 					fetch_piece = " " if chess_board[7 - row, col] == "" else chess_board[7 - row, col]
 
-				window_object.print_message(str(fetch_piece) + " | ")
+				window_object.print_message(str(fetch_piece), draw_color)
+				window_object.print_message(" | ")
 
 		window_object.print_message("" + str(eval_row) + str((info_padding + 1) * " ") + " | c \n")
-		window_object.print_message("     ---------------------------------" + (info_padding + 3) * " " + " | d \n")
+		window_object.print_message("     ---------------------------------"
+			+ (info_padding + 3) * " " + " | d \n"
+		)
 
 	# print footer
 	footer_string = "       " + header_footer_entries + (info_padding + 6) * " " + "| v \n"

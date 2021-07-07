@@ -28,14 +28,30 @@ class WindowHandler:
 		else:
 			curses.noecho()
 
+		"""
+		initiate colors in curses and define color pairs
+		"""
+		curses.start_color()
+
+		# arguments: (color_id, font_color, background_color)
+		curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
+		curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
+
 	def __del__(self):
 		curses.endwin()
 
 	def clear_screen(self):
 		self.scr.erase()
 
-	def print_message(self, message_to_print):
-		self.scr.addstr(message_to_print, curses.color_pair(1))
+	def print_message(self, message_to_print, color_pair = 0):
+		"""Print a message on the screen using curses.
+
+		This function takes the message to pring as well as
+		a color in the argument. The default (hardwired) color
+		coding is marked by zero (0), which is white text color
+		on black background.
+		"""
+		self.scr.addstr(message_to_print, curses.color_pair(color_pair))
 
 		# get the current cursor position
 		x, y = self.scr.getyx()
