@@ -148,9 +148,9 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		# define the possible moves by this rook
 		valid_possible_moves = np.array(
 			[
-				'10', '01', '20', '02',
-				'03', '04', '05', '06',
-				'07'
+				'01', '02', '03', '04',
+				'05', '06', '07', '10',
+				'20'
 			]
 		)
 
@@ -172,9 +172,9 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		# define the possible moves by this rook
 		valid_possible_moves = np.array(
 			[
-				'67', '76', '57', '75',
-				'47', '74', '73', '72',
-				'71', '70'
+				'47', '57', '67', '70',
+				'71', '72', '73', '74',
+				'75', '76'
 			]
 		)
 
@@ -254,9 +254,9 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		# define the possible moves by this rook
 		valid_possible_moves = np.array(
 			[
-				'10', '01', '20', '02',
-				'03', '04', '05', '06',
-				'07'
+				'01', '02', '03', '04',
+				'05', '06', '07', '10',
+				'20'
 			]
 		)
 
@@ -278,9 +278,9 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		# define the possible moves by this rook
 		valid_possible_moves = np.array(
 			[
-				'67', '76', '57', '75',
-				'47', '74', '73', '72',
-				'71', '70'
+				'47', '57', '67', '70',
+				'71', '72', '73', '74',
+				'75', '76'
 			]
 		)
 

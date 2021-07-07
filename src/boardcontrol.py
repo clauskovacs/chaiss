@@ -135,8 +135,6 @@ def valid_move_for_piece(chess_board, piece_position, player_color):
 	"""
 	# TODO: add en passant and promotion for pawns
 	# TODO: add castling which moves two pieces at the same time
-	# TODO: change the results of this funtion to be sorted. This
-	#		will affect the unit tests in test_boardcontrol!
 
 	# unpack the state of the piece which is should be moved
 	piece_row_pos = int(piece_position[0])
@@ -560,5 +558,8 @@ def valid_move_for_piece(chess_board, piece_position, player_color):
 							piece_row_pos + i,
 							piece_col_pos + j
 						)
+
+	# sort the returning array (ascending by their integer contents)
+	possible_moves = np.array(sorted(possible_moves, key = int), dtype = str)
 
 	return possible_moves
