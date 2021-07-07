@@ -8,11 +8,11 @@ This file contains all the logic setting up and managing the board.
 import numpy as np
 import collections
 
-#install colorama using 'sudo python3 -m pip install colorama'
-from colorama import Fore, Style, init
-init()
-
-import windowhandler
+# import directive for testing (test_boardcontrol)
+try:
+	from . import windowhandler
+except ImportError:
+	import windowhandler
 
 # dict for the pieces (abbreviated as they are stored in the board state)
 chess_pieces = {
