@@ -125,7 +125,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the array
+		# 'clear' the board
 		chess_board.fill('')
 
 		"""
@@ -186,6 +186,66 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
+		# 'clear' the board
+		chess_board.fill('')
+
+
+		"""
+		(white) knight testing
+		"""
+
+		# populate the board
+		chess_board[0, 0] = "n"
+		chess_board[7, 7] = "n"
+		chess_board[2, 1] = "n"
+		chess_board[1, 2] = "R"
+		chess_board[5, 6] = "R"
+
+		# check the center knight (at [00]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"00n",
+			"white"
+		)
+
+		# define the possible moves by this knight
+		valid_possible_moves = np.array(
+			[
+				'12'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+		# check the center knight (at [00]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"77n",
+			"white"
+		)
+
+		# define the possible moves by this knight
+		valid_possible_moves = np.array(
+			[
+				'56', '65'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+
 
 
 		''' black pieces '''
@@ -229,7 +289,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the array
+		# 'clear' the board
 		chess_board.fill('')
 
 
@@ -281,6 +341,62 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 				'47', '57', '67', '70',
 				'71', '72', '73', '74',
 				'75', '76'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+
+		"""
+		(black) knight testing
+		"""
+
+		# populate the board
+		chess_board[0, 0] = "N"
+		chess_board[7, 7] = "N"
+		chess_board[2, 1] = "N"
+		chess_board[1, 2] = "r"
+		chess_board[5, 6] = "r"
+
+		# check the center knight (at [00]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"00N",
+			"black"
+		)
+
+		# define the possible moves by this knight
+		valid_possible_moves = np.array(
+			[
+				'12'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+		# check the center knight (at [00]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"77N",
+			"black"
+		)
+
+		# define the possible moves by this knight
+		valid_possible_moves = np.array(
+			[
+				'56', '65'
 			]
 		)
 
