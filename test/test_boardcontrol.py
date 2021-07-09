@@ -64,7 +64,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-	def test_piece_movement(self):
+	def test_white_pawn_movement(self):
 		"""This functions verifies the (possible) movements of pieces.
 
 		Following functions are tested:
@@ -83,12 +83,6 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		''' check (possible) pawn movements: '''
 		# create a board without any pieces on it
 		chess_board = np.empty([8, 8], dtype = str)
-
-		''' white pieces '''
-
-		"""
-		(white) pawn testing
-		"""
 
 		# populate the board
 		chess_board[4, 4] = "p"	# center pawn
@@ -125,12 +119,25 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the board
-		chess_board.fill('')
+	def test_white_rook_movement(self):
+		"""This functions verifies the (possible) movements of pieces.
+
+		Following functions are tested:
+		o)	boardcontrol.valid_move_for_piece(). Please note that the
+			ordering of the results from this function are dependent of
+			its inner workings, i.e., they are not ordered in any kind!
+		"""
 
 		"""
-		(white) rook testing
+		Define an (empty) array: represents no possible
+		moves returned by the function
+		boardcontrol.valid_move_for_piece().
 		"""
+		no_poss_moves = np.empty([0], dtype = str)
+
+		''' check (possible) pawn movements: '''
+		# create a board without any pieces on it
+		chess_board = np.empty([8, 8], dtype = str)
 
 		# populate the board
 		chess_board[0, 0] = "r"	# edge rook1
@@ -186,13 +193,25 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the board
-		chess_board.fill('')
+	def test_wite_knight_movement(self):
+		"""This functions verifies the (possible) movements of pieces.
 
+		Following functions are tested:
+		o)	boardcontrol.valid_move_for_piece(). Please note that the
+			ordering of the results from this function are dependent of
+			its inner workings, i.e., they are not ordered in any kind!
+		"""
 
 		"""
-		(white) knight testing
+		Define an (empty) array: represents no possible
+		moves returned by the function
+		boardcontrol.valid_move_for_piece().
 		"""
+		no_poss_moves = np.empty([0], dtype = str)
+
+		''' check (possible) pawn movements: '''
+		# create a board without any pieces on it
+		chess_board = np.empty([8, 8], dtype = str)
 
 		# populate the board
 		chess_board[0, 0] = "n"
@@ -245,13 +264,25 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the board
-		chess_board.fill('')
+	def test_white_bishop_movement(self):
+		"""This functions verifies the (possible) movements of pieces.
 
+		Following functions are tested:
+		o)	boardcontrol.valid_move_for_piece(). Please note that the
+			ordering of the results from this function are dependent of
+			its inner workings, i.e., they are not ordered in any kind!
+		"""
 
 		"""
-		(white) bishop testing
+		Define an (empty) array: represents no possible
+		moves returned by the function
+		boardcontrol.valid_move_for_piece().
 		"""
+		no_poss_moves = np.empty([0], dtype = str)
+
+		''' check (possible) pawn movements: '''
+		# create a board without any pieces on it
+		chess_board = np.empty([8, 8], dtype = str)
 
 		# populate the board
 		chess_board[4, 4] = "b"
@@ -282,13 +313,25 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the board
-		chess_board.fill('')
+	def test_white_queen_movement(self):
+		"""This functions verifies the (possible) movements of pieces.
 
+		Following functions are tested:
+		o)	boardcontrol.valid_move_for_piece(). Please note that the
+			ordering of the results from this function are dependent of
+			its inner workings, i.e., they are not ordered in any kind!
+		"""
 
 		"""
-		(white) queen testing
+		Define an (empty) array: represents no possible
+		moves returned by the function
+		boardcontrol.valid_move_for_piece().
 		"""
+		no_poss_moves = np.empty([0], dtype = str)
+
+		''' check (possible) pawn movements: '''
+		# create a board without any pieces on it
+		chess_board = np.empty([8, 8], dtype = str)
 
 		# populate the board
 		chess_board[4, 4] = "q"
@@ -323,13 +366,25 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the board
-		chess_board.fill('')
+	def test_white_king_movement(self):
+		"""This functions verifies the (possible) movements of pieces.
 
+		Following functions are tested:
+		o)	boardcontrol.valid_move_for_piece(). Please note that the
+			ordering of the results from this function are dependent of
+			its inner workings, i.e., they are not ordered in any kind!
+		"""
 
 		"""
-		(white) king testing
+		Define an (empty) array: represents no possible
+		moves returned by the function
+		boardcontrol.valid_move_for_piece().
 		"""
+		no_poss_moves = np.empty([0], dtype = str)
+
+		''' check (possible) pawn movements: '''
+		# create a board without any pieces on it
+		chess_board = np.empty([8, 8], dtype = str)
 
 		# populate the board
 		chess_board[4, 4] = "k"
@@ -388,17 +443,27 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the board
-		chess_board.fill('')
 
 
+	def test_black_pawn_movement(self):
+		"""This functions verifies the (possible) movements of pieces.
 
-
-		''' black pieces '''
+		Following functions are tested:
+		o)	boardcontrol.valid_move_for_piece(). Please note that the
+			ordering of the results from this function are dependent of
+			its inner workings, i.e., they are not ordered in any kind!
+		"""
 
 		"""
-		(black) pawn testing
+		Define an (empty) array: represents no possible
+		moves returned by the function
+		boardcontrol.valid_move_for_piece().
 		"""
+		no_poss_moves = np.empty([0], dtype = str)
+
+		''' check (possible) pawn movements: '''
+		# create a board without any pieces on it
+		chess_board = np.empty([8, 8], dtype = str)
 
 		# populate the board
 		chess_board[4, 4] = "P"	# center pawn
@@ -435,14 +500,25 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the board
-		chess_board.fill('')
+	def test_black_rook_movement(self):
+		"""This functions verifies the (possible) movements of pieces.
 
-
+		Following functions are tested:
+		o)	boardcontrol.valid_move_for_piece(). Please note that the
+			ordering of the results from this function are dependent of
+			its inner workings, i.e., they are not ordered in any kind!
+		"""
 
 		"""
-		(black) rook testing
+		Define an (empty) array: represents no possible
+		moves returned by the function
+		boardcontrol.valid_move_for_piece().
 		"""
+		no_poss_moves = np.empty([0], dtype = str)
+
+		''' check (possible) pawn movements: '''
+		# create a board without any pieces on it
+		chess_board = np.empty([8, 8], dtype = str)
 
 		# populate the board
 		chess_board[0, 0] = "R"	# edge rook1
@@ -499,9 +575,25 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		)
 
 
+	def test_black_knight_movement(self):
+		"""This functions verifies the (possible) movements of pieces.
+
+		Following functions are tested:
+		o)	boardcontrol.valid_move_for_piece(). Please note that the
+			ordering of the results from this function are dependent of
+			its inner workings, i.e., they are not ordered in any kind!
 		"""
-		(black) knight testing
+
 		"""
+		Define an (empty) array: represents no possible
+		moves returned by the function
+		boardcontrol.valid_move_for_piece().
+		"""
+		no_poss_moves = np.empty([0], dtype = str)
+
+		''' check (possible) pawn movements: '''
+		# create a board without any pieces on it
+		chess_board = np.empty([8, 8], dtype = str)
 
 		# populate the board
 		chess_board[0, 0] = "N"
@@ -554,13 +646,25 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the board
-		chess_board.fill('')
+	def test_black_bishop_movement(self):
+		"""This functions verifies the (possible) movements of pieces.
 
+		Following functions are tested:
+		o)	boardcontrol.valid_move_for_piece(). Please note that the
+			ordering of the results from this function are dependent of
+			its inner workings, i.e., they are not ordered in any kind!
+		"""
 
 		"""
-		(black) bishop testing
+		Define an (empty) array: represents no possible
+		moves returned by the function
+		boardcontrol.valid_move_for_piece().
 		"""
+		no_poss_moves = np.empty([0], dtype = str)
+
+		''' check (possible) pawn movements: '''
+		# create a board without any pieces on it
+		chess_board = np.empty([8, 8], dtype = str)
 
 		# populate the board
 		chess_board[4, 4] = "B"
@@ -591,13 +695,25 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the board
-		chess_board.fill('')
+	def test_black_queen_movement(self):
+		"""This functions verifies the (possible) movements of pieces.
 
+		Following functions are tested:
+		o)	boardcontrol.valid_move_for_piece(). Please note that the
+			ordering of the results from this function are dependent of
+			its inner workings, i.e., they are not ordered in any kind!
+		"""
 
 		"""
-		(black) queen testing
+		Define an (empty) array: represents no possible
+		moves returned by the function
+		boardcontrol.valid_move_for_piece().
 		"""
+		no_poss_moves = np.empty([0], dtype = str)
+
+		''' check (possible) pawn movements: '''
+		# create a board without any pieces on it
+		chess_board = np.empty([8, 8], dtype = str)
 
 		# populate the board
 		chess_board[4, 4] = "Q"
@@ -632,13 +748,25 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# 'clear' the board
-		chess_board.fill('')
+	def test_black_king_movement(self):
+		"""This functions verifies the (possible) movements of pieces.
 
+		Following functions are tested:
+		o)	boardcontrol.valid_move_for_piece(). Please note that the
+			ordering of the results from this function are dependent of
+			its inner workings, i.e., they are not ordered in any kind!
+		"""
 
 		"""
-		(black) king testing
+		Define an (empty) array: represents no possible
+		moves returned by the function
+		boardcontrol.valid_move_for_piece().
 		"""
+		no_poss_moves = np.empty([0], dtype = str)
+
+		''' check (possible) pawn movements: '''
+		# create a board without any pieces on it
+		chess_board = np.empty([8, 8], dtype = str)
 
 		# populate the board
 		chess_board[4, 4] = "K"
@@ -696,11 +824,6 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 				valid_possible_moves
 			)
 		)
-
-		# 'clear' the board
-		chess_board.fill('')
-
-
 
 if __name__ == '__main__':
 	unittest.main()
