@@ -327,6 +327,72 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		chess_board.fill('')
 
 
+		"""
+		(white) king testing
+		"""
+
+		# populate the board
+		chess_board[4, 4] = "k"
+		chess_board[3, 3] = "P"
+		chess_board[5, 5] = "r"
+
+
+		# check the king (at [44]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"44k",
+			"white"
+		)
+
+		# define the possible moves by this queen
+		valid_possible_moves = np.array(
+			[
+				'33', '34', '35', '43',
+				'45', '53', '54'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+		# change the board state
+		chess_board[7, 7] = "k"
+		chess_board[6, 6] = "q"
+		chess_board[6, 7] = "P"
+
+
+		# check the king (at [77]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"77k",
+			"white"
+		)
+
+		# define the possible moves by this queen
+		valid_possible_moves = np.array(
+			[
+				'67', '76'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+		# 'clear' the board
+		chess_board.fill('')
+
+
+
 
 		''' black pieces '''
 
@@ -555,6 +621,71 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 				'46', '47', '53', '54',
 				'55', '62', '64', '66',
 				'71', '74'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+		# 'clear' the board
+		chess_board.fill('')
+
+
+		"""
+		(black) king testing
+		"""
+
+		# populate the board
+		chess_board[4, 4] = "K"
+		chess_board[3, 3] = "p"
+		chess_board[5, 5] = "R"
+
+
+		# check the king (at [44]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"44K",
+			"black"
+		)
+
+		# define the possible moves by this queen
+		valid_possible_moves = np.array(
+			[
+				'33', '34', '35', '43',
+				'45', '53', '54'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+		# change the board state
+		chess_board[7, 7] = "K"
+		chess_board[6, 6] = "Q"
+		chess_board[6, 7] = "p"
+
+
+		# check the king (at [77]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"77K",
+			"black"
+		)
+
+		# define the possible moves by this queen
+		valid_possible_moves = np.array(
+			[
+				'67', '76'
 			]
 		)
 
