@@ -245,6 +245,46 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
+		# 'clear' the board
+		chess_board.fill('')
+
+
+		"""
+		(white) bishop testing
+		"""
+
+		# populate the board
+		chess_board[4, 4] = "b"
+		chess_board[0, 0] = "k"
+		chess_board[2, 6] = "R"
+
+		# check the bishop (at [44]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"44b",
+			"white"
+		)
+
+		# define the possible moves by this bishop
+		valid_possible_moves = np.array(
+			[
+				'11', '22', '26', '33',
+				'35', '53', '55', '62',
+				'66', '71', '77'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+		# 'clear' the board
+		chess_board.fill('')
+
 
 
 
@@ -408,6 +448,45 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
+		# 'clear' the board
+		chess_board.fill('')
+
+
+		"""
+		(black) bishop testing
+		"""
+
+		# populate the board
+		chess_board[4, 4] = "B"
+		chess_board[0, 0] = "K"
+		chess_board[2, 6] = "r"
+
+		# check the bishop (at [44]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"44B",
+			"black"
+		)
+
+		# define the possible moves by this bishop
+		valid_possible_moves = np.array(
+			[
+				'11', '22', '26', '33',
+				'35', '53', '55', '62',
+				'66', '71', '77'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+		# 'clear' the board
+		chess_board.fill('')
 
 
 
