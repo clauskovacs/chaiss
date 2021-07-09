@@ -95,7 +95,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		chess_board[5, 5] = "R"	# enemy piece to capture
 		chess_board[7, 4] = "p"	# 'edge' pawn
 
-		# check the center pawn (at [44]):
+		# check the pawn (at [44]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"44p",
@@ -110,7 +110,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# check the edge pawn (at [74]):
+		# check the pawn (at [74]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"74p",
@@ -138,7 +138,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		chess_board[3, 7] = "p"	# edge rook2
 		chess_board[2, 0] = "P"	# edge rook2
 
-		# check the center rook (at [00]):
+		# check the rook (at [00]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"00r",
@@ -162,7 +162,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# check the center rook (at [77]):
+		# check the rook (at [77]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"77r",
@@ -201,7 +201,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		chess_board[1, 2] = "R"
 		chess_board[5, 6] = "R"
 
-		# check the center knight (at [00]):
+		# check the knight (at [00]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"00n",
@@ -223,7 +223,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# check the center knight (at [00]):
+		# check the knight (at [77]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"77n",
@@ -286,6 +286,46 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		chess_board.fill('')
 
 
+		"""
+		(white) queen testing
+		"""
+
+		# populate the board
+		chess_board[4, 4] = "q"
+		chess_board[0, 0] = "R"
+		chess_board[7, 7] = "p"
+
+		# check the queen (at [44]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"44q",
+			"white"
+		)
+
+		# define the possible moves by this queen
+		valid_possible_moves = np.array(
+			[
+				'00', '04', '11', '14',
+				'17', '22', '24', '26',
+				'33', '34', '35', '40',
+				'41', '42', '43', '45',
+				'46', '47', '53', '54',
+				'55', '62', '64', '66',
+				'71', '74'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+		# 'clear' the board
+		chess_board.fill('')
+
 
 
 		''' black pieces '''
@@ -299,7 +339,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		chess_board[3, 5] = "r"	# enemy piece to capture
 		chess_board[0, 4] = "P"	# 'edge' pawn
 
-		# check the center pawn (at [44]):
+		# check the pawn (at [44]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"44P",
@@ -314,7 +354,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# check the edge pawn (at [04]):
+		# check the pawn (at [04]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"04P",
@@ -344,7 +384,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		chess_board[3, 7] = "P"	# edge rook2
 		chess_board[2, 0] = "p"	# edge rook2
 
-		# check the center rook (at [00]):
+		# check the rook (at [00]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"00R",
@@ -368,7 +408,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# check the center rook (at [77]):
+		# check the rook (at [77]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"77R",
@@ -404,7 +444,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		chess_board[1, 2] = "r"
 		chess_board[5, 6] = "r"
 
-		# check the center knight (at [00]):
+		# check the knight (at [00]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"00N",
@@ -426,7 +466,7 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 			)
 		)
 
-		# check the center knight (at [00]):
+		# check the knight (at [00]):
 		possible_moves = boardcontrol.valid_move_for_piece(
 			chess_board,
 			"77N",
@@ -489,8 +529,47 @@ class Unit_tests_boardcontrol(unittest.TestCase):
 		chess_board.fill('')
 
 
+		"""
+		(black) queen testing
+		"""
+
+		# populate the board
+		chess_board[4, 4] = "Q"
+		chess_board[0, 0] = "r"
+		chess_board[7, 7] = "P"
+
+		# check the queen (at [44]):
+		possible_moves = boardcontrol.valid_move_for_piece(
+			chess_board,
+			"44Q",
+			"black"
+		)
+
+		# define the possible moves by this queen
+		valid_possible_moves = np.array(
+			[
+				'00', '04', '11', '14',
+				'17', '22', '24', '26',
+				'33', '34', '35', '40',
+				'41', '42', '43', '45',
+				'46', '47', '53', '54',
+				'55', '62', '64', '66',
+				'71', '74'
+			]
+		)
+
+		# assert the possible moves
+		self.assertIsNone(
+			np.testing.assert_array_equal(
+				possible_moves,
+				valid_possible_moves
+			)
+		)
+
+		# 'clear' the board
+		chess_board.fill('')
+
+
 
 if __name__ == '__main__':
 	unittest.main()
-
-
