@@ -16,16 +16,16 @@ This project has the following folder structure
 └── test
 ```
 
-The folder **logs** contains all logfiles regarding games (moves, boardstates, agent informations, etc.).
+1. The folder **logs** contains all logfiles regarding games (moves, boardstates, agent informations, etc.).
 
-In the folder **src** all python files are stored. These are:
-- *agents.py* (contains the all the different computer player logic controls)
-- *boardcontrol.py* (setting up the board and pieces move management)
-- *chaiss.py* (the main program)
-- *stdoutwrapper.py* (a wrapper for curses used to put text to the terminal post running)
-- *windowhandler.yp* (curses Windowhandler for terminal rendering)
+2. In the folder **src** all python files are stored. These are:
+    - *agents.py* (contains the all the different computer player logic controls)
+    - *boardcontrol.py* (setting up the board and pieces move management)
+    - *chaiss.py* (the main program)
+    - *stdoutwrapper.py* (a wrapper for curses used to put text to the terminal post running)
+    - *windowhandler.yp* (curses Windowhandler for terminal rendering)
 
-The last folder **test** contains all the unit tests regarding this program.
+3. The last folder **test** contains all the unit tests regarding this program.
 
 ## Additional Information
 
